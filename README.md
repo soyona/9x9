@@ -7,7 +7,7 @@
 
 ## 🚀 规范 V1.2.0 核心价值证明 (Case Study Value)
 
-作为继 `Hanzi Connect` 之后的又一工业级实战样本，本项目完整验证了规范 **V1.2.0 版本** 针对智能体“状态漂移”与“网络边界二义性”提出的双向锁死机制：
+作为继 **[Hanzi Connect](https://github.com/soyona/hanzi-connect)** 之后的又一工业级实战样本，本项目完整验证了规范 **V1.2.0 版本** 针对智能体“状态漂移”与“网络边界二义性”提出的双向锁死机制：
 
 1. **🔒 EST 物理交付卡点（No Log, No Done）**：在 M2 声光效果与关卡链路的敏捷腾挪中，智能体曾试图跳过记忆轨直接交付代码。项目通过 `.clinerules` 强行拦截，必须将物理更新 `memory-bank/activeContext.md` 与 `progress.md` 作为最终 Act 动作，彻底解决了智能体长对话下的马尔可夫认知退化。
 2. **🌐 运行时网络边界审计（Runtime Auditing）**：针对 Next.js 应用在局域网（`192.168.1.2`）多端真机联调时，因热更新（HMR）安全策略导致的点击响应失效，项目前置在 `techContext.md` 中立项审计，通过顶层 `allowedDevOrigins` 配置锁死网络边界，抹平了“静态编译完美”与“用户运行时物理表现”的隐式死锁。
