@@ -1,6 +1,10 @@
 # Active Context
 
 ## 当前状态
+## 当前状态
+- 2026-07-08 正式发布 v1.1.0-mvp.release！
+- 完整合入了 V1.2.5 拟物化 3D 水果与宝石生态、OnChange 即时数学验证、Framer Motion 弹性正误反馈层、以及 100dvh 全刚性视口死锁防御，0 errors / 0 warnings 静态构建通关。
+- MVP 核心交付目标已全部达成，项目正式进入稳定存档状态。
 - 2026-07-07 本轮 10×10 加法公式完整显示修复已完成：`ConceptVisualizer` 为大行列公式追加 dense 渲染状态，移除加法公式行上的 Tailwind `whitespace-nowrap`/`font-mono` 约束，改由 `.formula-list p.formula-addition` 显式覆盖 `text-overflow: clip` 与 `white-space: normal`，避免 10×10 重复加法出现省略号。
 - 本轮验证：`npm run lint && npm run build` 一次通过；fresh `next start -p 3001` Browser QA 切换 10×10 后，加法公式文本完整为 `加法算式：10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 =`，computed `textOverflow=clip`、`whiteSpace=normal`、`additionFitsPanel=true`、`scrollHealth=true`，相关 console 日志为空。临时 3001 server 已停止。
 - 2026-07-07 本轮公式区域抖动修复已完成：`ConceptVisualizer` 底部公式区从 `layout` motion 包裹与 `y` 位移动画改为固定高度 `.formula-stable-panel`，只保留 0.16s opacity 过渡，避免切换行列时公式面板自身产生位置抖动。
