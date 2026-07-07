@@ -1,5 +1,7 @@
 # 🧩 9x9 MathGrid (九九乘法数阵) - v1.1.0
 
+![9x9 Demo](./assets/demo.png)
+
 > **基于前端全栈单兵工程规范 [Spec-Driven Solo (V1.2.5)](https://github.com/soyona/spec-driven-solo) 倾力打造的标杆实战项目。**
 > 这是一个专门面向低年级儿童设计的 Apple 质感、全自适应乘法矩阵认知与闯关训练应用。全流程严格遵循“改码前先改图纸”的宪法约束，实现 100% 零瞎猜、零死锁的高确定性演进。
 
