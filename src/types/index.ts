@@ -23,7 +23,6 @@ export interface MatrixCell {
 export type GameEffectType =
   | "answer-correct"
   | "answer-incorrect"
-  | "level-complete"
   | "tier-changed"
   | "timer-ended";
 

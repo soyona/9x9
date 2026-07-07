@@ -30,7 +30,7 @@ interface GameState {
 }
 
 const initialSettings: GameSettings = {
-  tier: "level_6x6",
+  tier: "level_10x10",
   hasTimer: true,
   timeLimitSeconds: 300,
 };
@@ -106,18 +106,46 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   setCellValue: (row, col, value) => {
     const numericValue = value.replace(/\D/g, "").slice(0, 3);
-    set((state) => ({
-      cells: state.cells.map((cell) =>
-        cell.row === row && cell.col === col && !cell.isReadOnly
-          ? {
-              ...cell,
-              userValue: numericValue,
-              isSubmitted: false,
-              isCorrect: false,
-            }
-          : cell,
-      ),
-    }));
+    let correctAnswer: number | undefined;
+    let shouldEmitCorrect = false;
+
+    set((state) => {
+      let shouldScore = false;
+      const cells = state.cells.map((cell) => {
+        if (
+          cell.row !== row ||
+          cell.col !== col ||
+          cell.isReadOnly ||
+          cell.isCorrect
+        ) {
+          return cell;
+        }
+
+        const isCorrect =
+          Number.parseInt(numericValue, 10) === cell.correctAnswer;
+        if (isCorrect && !cell.isSubmitted) {
+          correctAnswer = cell.correctAnswer;
+          shouldEmitCorrect = true;
+          shouldScore = true;
+        }
+
+        return {
+          ...cell,
+          userValue: numericValue,
+          isCorrect,
+          isSubmitted: isCorrect,
+        };
+      });
+
+      return {
+        cells,
+        score: shouldScore ? state.score + 10 : state.score,
+      };
+    });
+
+    if (shouldEmitCorrect) {
+      get().emitEffect("answer-correct", correctAnswer);
+    }
   },
 
   submitSelectedCell: () => {
@@ -128,6 +156,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     );
 
     if (!target || target.isReadOnly || target.userValue === "") return null;
+    if (target.isSubmitted) return null;
 
     const isCorrect = Number(target.userValue) === target.correctAnswer;
     const updatedCells = cells.map((cell) =>
@@ -136,19 +165,14 @@ export const useGameStore = create<GameState>((set, get) => ({
         : cell,
     );
 
-    const isLevelComplete =
-      isCorrect &&
-      updatedCells.every((cell) => cell.isReadOnly || cell.isCorrect);
-    const effectType: GameEffectType = isLevelComplete
-      ? "level-complete"
-      : isCorrect
-        ? "answer-correct"
-        : "answer-incorrect";
+    const effectType: GameEffectType = isCorrect
+      ? "answer-correct"
+      : "answer-incorrect";
 
     set((state) => ({
       cells: updatedCells,
-      score: isCorrect && !target.isCorrect ? state.score + 10 : state.score,
-      timerRunning: isLevelComplete ? false : state.timerRunning,
+      score:
+        isCorrect && !target.isSubmitted ? state.score + 10 : state.score,
     }));
     get().emitEffect(effectType, target.correctAnswer);
     return effectType;

@@ -20,8 +20,12 @@ export default function Home() {
       </header>
 
       <div className="page-shell">
-        <ConceptVisualizer />
-        <TrainingMatrix />
+        <div className="concept-column">
+          <ConceptVisualizer />
+        </div>
+        <div className="training-column">
+          <TrainingMatrix />
+        </div>
       </div>
     </main>
   );

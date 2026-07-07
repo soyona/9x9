@@ -17,7 +17,7 @@ export const TIER_LABEL: Record<DifficultyTier, string> = {
 export const DIFFICULTY_TIERS = Object.keys(TIER_SIZE) as DifficultyTier[];
 
 export function createMatrixCells(tier: DifficultyTier): MatrixCell[] {
-  const unlockedSize = TIER_SIZE[tier];
+  void tier;
 
   return Array.from({ length: 100 }, (_, index) => {
     const row = Math.floor(index / 10) + 1;
@@ -30,7 +30,7 @@ export function createMatrixCells(tier: DifficultyTier): MatrixCell[] {
       userValue: "",
       isSubmitted: false,
       isCorrect: false,
-      isReadOnly: row > unlockedSize || col > unlockedSize,
+      isReadOnly: false,
     };
   });
 }
